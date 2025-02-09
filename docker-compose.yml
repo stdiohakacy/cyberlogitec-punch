@@ -1,0 +1,10 @@
+version: '3.3'
+
+services:
+  cornal-punch-cron:
+    image: curlimages/curl:latest
+    container_name: cornal-punch-cron-container
+    command: ["/bin/sh", "-c", "/scripts/schedule.sh"]
+    volumes:
+      - ./scripts:/scripts
+    restart: always
