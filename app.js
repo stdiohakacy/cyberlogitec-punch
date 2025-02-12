@@ -1,7 +1,6 @@
 const express = require('express');
 const axios = require('axios');
 const cookieParser = require('cookie-parser');
-const cron = require('node-cron');
 require('dotenv').config();
 
 const app = express();
@@ -58,7 +57,7 @@ function getRandomTime(hourStart, hourEnd) {
 function schedulePunchJobs() {
     const morningTime = getRandomTime(0, 7);
     const eveningTime = getRandomTime(18, 23);
-
+    
     const morningDelay = morningTime - new Date();
     const eveningDelay = eveningTime - new Date();
 
