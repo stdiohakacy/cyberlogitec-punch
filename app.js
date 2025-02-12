@@ -39,45 +39,6 @@ async function sendPunchRequest() {
     }
 }
 
-function getRandomTime(hourStart, hourEnd) {
-    const now = new Date();
-    const randomHour = Math.floor(Math.random() * (hourEnd - hourStart + 1)) + hourStart;
-    const randomMinute = Math.floor(Math.random() * 60);
-    const randomSecond = Math.floor(Math.random() * 60);
-
-    const scheduledTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), randomHour, randomMinute, randomSecond);
-
-    if (scheduledTime < now) {
-        scheduledTime.setDate(scheduledTime.getDate() + 1);
-    }
-
-    return scheduledTime;
-}
-
-function schedulePunchJobs() {
-    const morningTime = getRandomTime(0, 7);
-    const eveningTime = getRandomTime(18, 23);
-    
-    const morningDelay = morningTime - new Date();
-    const eveningDelay = eveningTime - new Date();
-
-    console.log(`Scheduled morning punch at: ${morningTime}`);
-    console.log(`Scheduled evening punch at: ${eveningTime}`);
-
-    setTimeout(() => {
-        sendPunchRequest();
-        schedulePunchJobs(); // Reschedule for the next day
-    }, morningDelay);
-
-    setTimeout(() => {
-        sendPunchRequest();
-        schedulePunchJobs(); // Reschedule for the next day
-    }, eveningDelay);
-}
-
-// Start scheduling jobs
-schedulePunchJobs();
-
 app.post('/punch', async (req, res) => {
     try {
         await sendPunchRequest();
